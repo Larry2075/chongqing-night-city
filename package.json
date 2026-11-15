@@ -1,0 +1,20 @@
+{
+  "name": "chongqing-night",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "build": "node scripts/build-site.mjs",
+    "preview": "node server.mjs --dist",
+    "check": "node scripts/check-navigation.mjs && node scripts/check-terrain.mjs && node scripts/check-transport.mjs",
+    "check:corridor": "node scripts/check-corridor.mjs",
+    "check:one-take": "node scripts/check-one-take.mjs"
+  },
+  "dependencies": {
+    "three": "0.170.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

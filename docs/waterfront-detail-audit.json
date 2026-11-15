@@ -1,0 +1,143 @@
+{
+  "date": "2026-11-14",
+  "buildings": 956,
+  "coreBuildings": 73,
+  "heightCorrections": 161,
+  "faces": 1657,
+  "shops": 3296,
+  "windows": 9623,
+  "roofs": 370,
+  "signs": 3825,
+  "instances": 181128,
+  "places": [
+    {
+      "key": "waterfrontJiabin",
+      "label": "嘉滨路 · 沿街商铺",
+      "buildingId": 1128460274,
+      "position": [
+        174.0023951150506,
+        3.4999999999999996,
+        63.43952702856588
+      ]
+    },
+    {
+      "key": "waterfrontChangbin",
+      "label": "长滨路 · 江边街景",
+      "buildingId": 1128467252,
+      "position": [
+        338.28802897541084,
+        12.978150860111397,
+        -73.40315653605016
+      ]
+    },
+    {
+      "key": "waterfrontHuguang",
+      "label": "东水门 · 湖广会馆一带",
+      "buildingId": 866088572,
+      "position": [
+        283.13772767193734,
+        18.25500753144963,
+        -144.09936599117495
+      ]
+    },
+    {
+      "key": "waterfrontLongmen",
+      "label": "南滨路 · 龙门浩街景",
+      "buildingId": "bb54f838-521b-46d8-a0f9-baa58836b0b3",
+      "position": [
+        545.060563317885,
+        8.049999999999999,
+        -181.17816275617793
+      ]
+    },
+    {
+      "key": "waterfrontMuseum",
+      "label": "南滨路 · 故宫南迁一带",
+      "buildingId": 1225419201,
+      "position": [
+        555.2182179918556,
+        11.142109582696488,
+        149.01434459733787
+      ]
+    },
+    {
+      "key": "waterfrontDanzishi",
+      "label": "南滨路 · 弹子石街景",
+      "buildingId": "119fe406-65a0-49dc-a5af-fd6effe482d8",
+      "position": [
+        285.5660825822587,
+        17.28104131323456,
+        671.2176877268973
+      ]
+    },
+    {
+      "key": "waterfrontJiangbei",
+      "label": "北滨二路 · 江北嘴街景",
+      "buildingId": "d797b33a-4fda-44fe-a771-7f8b00e2bd05",
+      "position": [
+        87.92345858397245,
+        8.049999999999999,
+        444.766954697893
+      ]
+    }
+  ],
+  "validation": {
+    "walkingAnd75SecondFlight": "passed",
+    "terrain": "513290 adaptive triangles; all route samples passed",
+    "transport": "576 vehicles, 6 trains / 36 cars; continuous loop passed",
+    "viewpoints": "all 7 have a valid walkable floor and clear player capsule",
+    "browser": [
+      "Jiabin storefronts and clear terrain sightline",
+      "Dai Jia Xiang shop scale and WASD displacement",
+      "Huguang roof eaves and timber/yellow-wall facade",
+      "Palace Museum stepped brick buildings",
+      "Flat illustration and passing-eaves camera",
+      "No browser errors or warnings"
+    ]
+  },
+  "limitations": [
+    "Scalar building heights in this refinement are estimates, with source and uncertainty in waterfront-survey.js.",
+    "Street/landmark names follow mapped places. Unregistered shops use business-type labels, not invented real brands.",
+    "Facade finishes, windows, interiors and night lighting are reference-based interpretations, not photogrammetry.",
+    "Terrain mesh refinement only reduces rendering interpolation error; source DEM accuracy is unchanged."
+  ],
+  "sourceMetadata": {
+    "surveyDate": "2026-11-14",
+    "coordinateSystem": "WGS84 transformed to scene x/z",
+    "metresToScene": 0.35,
+    "heightPolicy": "heightMeters is a body/eaves approximation; all new scalar overrides are estimated. Published roof limits and door clearances have separate confirmed fields.",
+    "positionPolicy": "OSM footprints and POIs are mapped positions, not survey-grade measurements. No business names were assigned by proximity alone.",
+    "sources": {
+      "science": "https://www.cq.gov.cn/zjcq/bywh/whss/kjg/",
+      "scienceDesign": "https://www.cqadi.com.cn/page/news-center/whcg/20230516/524473.html",
+      "palace": "https://www.cqna.gov.cn/zjna/nbl/zbnb/nbzjxm/202210/t20221018_11197002.html",
+      "financial": "https://zfcxjw.cq.gov.cn/zwxx_166/zwyw/202410/t20241031_13759938_jlb.html",
+      "huguang": "https://whlyw.cq.gov.cn/zjwl/yzq/cqwlzy/zqwwzy/202405/t20240507_13182428.html",
+      "xiahao": "https://www.cqna.gov.cn/zwxx_254/bmjz/202408/t20240809_13487765.html",
+      "longmen": "https://www.cqna.gov.cn/zjna/nbl/zbnb/nbzjxm/202210/t20221018_11197006.html",
+      "ciyun": "https://www.cqtzb.gov.cn/web/article/1415791331826307072/web/content_1415791331826307072.html",
+      "danzishi": "https://www.cqadi.com.cn/page/news-center/shandijianzhu/20230105/524809.html",
+      "danzishiTerrain": "https://dfz.cq.gov.cn/zqlswh/fjms_417821/202311/t20231102_12510168.html",
+      "church": "https://cqkc.org/content/contact",
+      "teresa": "https://www.wanyouzhenyuan.cn/index.php?id=551&m=church",
+      "temple": "https://cqrb.cn/yingxiang/tuji/2024-09-03/2014432_pc.html",
+      "cable": "https://commons.wikimedia.org/wiki/File:%E9%87%8D%E5%BA%86%E5%98%89%E9%99%B5%E6%B1%9F%E7%B4%A2%E9%81%93%E5%8D%9A%E7%89%A9%E9%A6%86.jpg",
+      "cableOfficial": "https://whlyw.cq.gov.cn/zwgk_221/fdzdgknr/czyjs/js/202108/t20210831_9643341.html",
+      "baixiang": "https://cpc.people.com.cn/n1/2025/0319/c64387-40441738.html",
+      "gates": "https://www.cqkaogu.cn/web/article/1420142202218057728/web/content_1420142202218057728.html",
+      "eastGate": "https://www.cqyz.gov.cn/zjyz/lyyz/lswh/lsww/202210/t20221005_11164493.html",
+      "daijia": "https://zfcxjw.cq.gov.cn/ztzl_166/srtdcsgxts/zdxm/202211/t20221128_11340472.html",
+      "daijiaPhoto": "https://zfcxjw.cq.gov.cn/zwxx_166/jdtp/202404/t20240422_13149776.html"
+    },
+    "restorationNote": "海韵大厦 was excluded by the earlier coarse Raffles podium mask. Restore only after checking the hand-model podium overlap.",
+    "attribution": "© OpenStreetMap contributors (ODbL); footprint derivatives retain existing Overture/East Asian attribution. Photos were viewed only as references, not included as site textures.",
+    "counts": {
+      "heightOverrides": 161,
+      "estimatedScalarHeights": 161,
+      "confirmedScalarHeights": 0,
+      "heritageZones": 6,
+      "places": 77,
+      "restoredBuildings": 1
+    }
+  }
+}

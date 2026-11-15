@@ -1,0 +1,23 @@
+node_modules/
+.DS_Store
+dist/
+outputs/
+previews/
+assets/audio/
+.audio-venv/
+.env
+.env.*
+*.log
+__pycache__/
+# Local video production is separate from the public city site.
+preview.html
+video-preview.html
+video-final.html
+src/preview-export.js
+src/river-flight-v1.js
+src/river-flight-75s.js
+scripts/master-server.mjs
+scripts/preview-server.mjs
+scripts/mix-final.py
+scripts/ensure-servers.mjs
+*.command

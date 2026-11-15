@@ -1,0 +1,156 @@
+{
+  "surveyedBuildings": 30,
+  "rendered": 28,
+  "retainingFaces": 157,
+  "photoShop": [
+    {
+      "id": 950181634,
+      "edge": 2,
+      "role": "photo-referenced-noodle-shop",
+      "base": 18.029811292082556,
+      "buildingBase": 17.789719687499986,
+      "shopSigns": [
+        "李板凳面"
+      ],
+      "address": "朝千路41号",
+      "source": "https://dimg04.c-ctrip.com/images/0101f120009ru1vetD9DC.jpg",
+      "placement": "mapped-building-and-poi; door-plane-and-height-approximate"
+    }
+  ],
+  "views": {
+    "chaqian": {
+      "score": 0.3213459700566966,
+      "id": 950181634,
+      "name": "朝千路 · 李板凳面",
+      "region": "jiabin",
+      "corridor": true,
+      "street": "朝千路",
+      "walkDistance": 5.534080312934863,
+      "gradeDifference": 0,
+      "width": 3,
+      "faceX": 155.63232048142004,
+      "faceZ": 48.18478237614967,
+      "x": 154.8295521848305,
+      "y": 18.029811292082556,
+      "z": 49.86262714310242,
+      "yaw": -0.44626114253169324,
+      "pitch": 0.10711532335223219,
+      "mode": "walk",
+      "fov": 68,
+      "label": "朝千路 · 李板凳面",
+      "description": "独立楼栋立面 · 夜间街景"
+    },
+    "haiyun": {
+      "id": 486221616,
+      "name": "海韵大厦",
+      "region": "chaotian",
+      "corridor": true,
+      "street": "陕西路",
+      "walkDistance": 79.64429895305928,
+      "gradeDifference": 0,
+      "width": 9.663379326094992,
+      "faceX": 276.6134506387878,
+      "faceZ": 51.986393386982115,
+      "x": 267.9842229963604,
+      "y": 17.06113838226236,
+      "z": 53.43516193135609,
+      "yaw": -1.4044567686911094,
+      "pitch": -0.03332099587824727,
+      "mode": "fly",
+      "fov": 58,
+      "label": "陕西路 · 海韵大厦",
+      "description": "独立楼栋立面 · 夜间街景"
+    },
+    "jiliang": {
+      "score": 0.6855924613040989,
+      "id": 748910914,
+      "name": "基良广场",
+      "region": "changbin",
+      "corridor": true,
+      "street": "陕西路二巷",
+      "walkDistance": 75.36324772448725,
+      "gradeDifference": 0,
+      "width": 18.25425977683019,
+      "faceX": 288.68084353923774,
+      "faceZ": 63.410179670318655,
+      "x": 287.0210884809441,
+      "y": 9.1,
+      "z": 57.89449175796641,
+      "yaw": -2.8492963168598084,
+      "pitch": 0.09519748710136627,
+      "mode": "walk",
+      "fov": 68,
+      "label": "陕西路二巷 · 基良广场",
+      "description": "独立楼栋立面 · 夜间街景"
+    },
+    "tianjiao": {
+      "score": 0.5738540939363281,
+      "id": 950181639,
+      "name": "时代天骄",
+      "region": "jiabin",
+      "corridor": true,
+      "street": "朝千路",
+      "walkDistance": 35.5109654296936,
+      "gradeDifference": 0,
+      "width": 6.207455195166521,
+      "faceX": 208.60199875285173,
+      "faceZ": 50.4379226042814,
+      "x": 211.57396882129336,
+      "y": 22.549031808715867,
+      "z": 45.35006510703494,
+      "yaw": 2.6129240263775944,
+      "pitch": 0.04372120924888118,
+      "mode": "walk",
+      "fov": 68,
+      "label": "朝千路 · 时代天骄",
+      "description": "独立楼栋立面 · 夜间街景"
+    }
+  },
+  "night": {
+    "fixedNightSky": true,
+    "ambientIntensity": 0.36,
+    "moonIntensity": 0.42,
+    "illustrationSkyAlsoDarkened": true
+  },
+  "limits": [
+    "Ordinary residential window divisions are type-based estimates, not individually surveyed.",
+    "Noodle shop is photo referenced and POI matched; door plane, elevation, landing and stairs are approximate.",
+    "Xu Dingsheng sign group is photo referenced to the lower right gallery; exact doorway coordinates are approximate.",
+    "Jiliang six levels apply only to OSM outline 748910914, not the entire mixed high-rise development."
+  ],
+  "independentCityRecords": 10123,
+  "verification": {
+    "navigationSamples": 26102,
+    "walkingSteps": 54075,
+    "flightSeconds": 75,
+    "terrainTriangles": 513290,
+    "transport": "passed",
+    "corridorBindings": "passed",
+    "browser": {
+      "consoleErrors": 0,
+      "walkBefore": [
+        154.83,
+        18.03,
+        49.863
+      ],
+      "walkAfter": [
+        155.026,
+        18.03,
+        49.452
+      ],
+      "checkedViews": [
+        "flat-night-intro",
+        "river-overlook",
+        "photo-noodle-shop",
+        "hongya-sign-group",
+        "haiyun-facade"
+      ],
+      "screenshots": [
+        "previews/朝千路板凳面夜景.jpg",
+        "previews/洪崖洞实景门头夜景.jpg",
+        "previews/陕西路海韵大厦夜景.jpg",
+        "previews/重庆深夜夜色修正版.jpg"
+      ]
+    }
+  }
+}
