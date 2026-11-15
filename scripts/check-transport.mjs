@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import {buildTransport,trainRoutes,transportRoutes,transportStats,railLevel} from '../src/transport.js';
 import {coreHeight} from '../data/site-survey.js';
 import {archDeck} from '../src/river-route.js';
-import {placeRiverFlight} from '../src/river-flight.js';
+import {placeRiverFlight,line6Shot} from '../src/river-flight.js';
 const TICK=[],scene=new THREE.Scene();
 const model=buildTransport({scene,TICK,NOINK:[],put:m=>m,box:()=>new THREE.Mesh(),beam:()=>new THREE.Mesh(),panel:()=>{},mat:color=>new THREE.MeshBasicMaterial({color})});
 assert.equal(trainRoutes.length,6);
@@ -38,7 +38,7 @@ console.log(JSON.stringify({...transportStats,movingCars,movingTrainCars,verifie
 const camera=new THREE.PerspectiveCamera(55,16/9,.28,2000),matrix=new THREE.Matrix4();
 const route=trainRoutes.find(r=>r.id==='rail-327734436');
 let minimumVisible=6;
-for(let ms=56000;ms<=62000;ms+=250){
+for(let ms=line6Shot.start;ms<=line6Shot.end;ms+=250){
  model.update(ms%12000,ms,true);placeRiverFlight(camera,ms);camera.updateMatrixWorld();
  let visible=0;
  for(let car=0;car<6;car++){
@@ -52,4 +52,4 @@ for(let ms=56000;ms<=62000;ms+=250){
 model.update(0,60000,false);const freeRoam=model.trainBody.instanceMatrix.array.slice();
 model.update(0,60000,true);model.update(0,60000,false);
 assert.deepEqual(model.trainBody.instanceMatrix.array,freeRoam,'Flight cue must not persist into free roam');
-console.log(JSON.stringify({line6TrackingSeconds:[56,62],minimumVisibleCarriages:minimumVisible,freeRoamUnaffected:true}));
+console.log(JSON.stringify({line6TrackingSeconds:[line6Shot.start/1000,line6Shot.end/1000],minimumVisibleCarriages:minimumVisible,freeRoamUnaffected:true}));

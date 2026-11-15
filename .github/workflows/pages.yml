@@ -21,6 +21,7 @@ jobs:
       - run: npm run check
       - run: npm run check:corridor
       - run: npm run check:one-take
+      - run: npm run check:landmarks
       - run: npm run build
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4

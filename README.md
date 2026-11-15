@@ -2,7 +2,7 @@
 
 [打开在线城市](https://larry2075.github.io/chongqing-night-city/) · [直接自由探索](https://larry2075.github.io/chongqing-night-city/?explore=1)
 
-基于 Three.js 的重庆雨夜虚拟城市，覆盖戴家巷、洪崖洞、朝天门、来福士与两江沿岸。包括平面插画展开到三维的镜头、自由行走与飞行、桥上车流及轨道交通，以及 105 秒一镜到底路线（包含朝天门大桥与 6 号线过千厮门）。
+基于 Three.js 的重庆雨夜虚拟城市，覆盖戴家巷、洪崖洞、朝天门、来福士与两江沿岸。包括平面插画展开到三维的镜头、自由行走与飞行、桥上车流及轨道交通，以及 105 秒一镜到底路线（朝天门大桥 → 东水门大桥 → 来福士水晶连廊 → 千厮门大桥与 6 号线 → 洪崖洞）。
 
 ## 操作
 
@@ -25,6 +25,7 @@ npm start
 npm run check
 npm run check:corridor
 npm run check:one-take
+npm run check:landmarks
 npm run build
 PORT=8776 npm run preview
 ```

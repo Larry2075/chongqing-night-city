@@ -3,6 +3,7 @@ import { levels,UNIT,coreHeight } from '../data/site-survey.js';
 import { buildingSurvey } from '../data/building-survey.js';
 import { buildLifts } from './lifts.js';
 import * as THREE from 'three';
+import {spindleTower,bridgeEdgeDetails,bridgeLandmarks} from './bridge-details.js';
 import { buildCity } from './city.js';
 import { bridgeHeight, bridgeZ, eastBridgeZ, archDeck, riverMarkers, riverwalks, lowerQuay, qiansimenStepSegments } from './river-route.js';
 
@@ -125,17 +126,27 @@ export function buildRivers({mat,box,put,beam,panel,district,tex,TICK=[],NOINK=[
     const [x,y,z]=[300.4345,23,eastBridgeZ(300.4345)], [nx,ny,nz]=[563.4625,23,eastBridgeZ(563.4625)];
     const length=Math.hypot(nx-x,nz-z), angle=Math.atan2(z-nz,nx-x);
     box(length,.50,8.4,slate,(x+nx)/2,y-.25,(z+nz)/2,angle);
-    for(const t of [.24,.73]) {
-      const px=THREE.MathUtils.lerp(x,nx,t), pz=THREE.MathUtils.lerp(z,nz,t);
-      for(const side of [-1,1]) {
-        beam([px,y-8,pz+side*3.8],[px,y+26,pz+side*.7],1.1,paintedRed);
-        for(const offset of [-24,-17,-10,10,17,24]){
-          beam([px,y+24-Math.abs(offset)*.13,pz+side*.7],
-            [px+offset,ny,pz+offset*(nz-z)/(nx-x)+side*2.2],.12,litRed);
-        }
+    const eastAxis=new THREE.Vector2(nx-x,nz-z).normalize();
+    bridgeLandmarks.dongshuimen.pylons.forEach((center,i)=>{
+      const top=i===0?56.8:60.4;
+      spindleTower({put,beam,mat,center,deck:y,top,axis:eastAxis.toArray(),halfWidth:4.7});
+      for(const dir of [-1,1])for(let k=0;k<16;k++){
+        const d=10+k*4.5,px=center[0]+eastAxis.x*d*dir;
+        if(px<x+2||px>nx-2)continue;
+        beam([center[0],top-2.2-k*.45,center[1]],[px,y+.14,eastBridgeZ(px)],.078,litRed);
       }
-      box(3.8,y,6,embankment,px,y*.35,pz);
+    });
+    // Open lower truss leaves the rail deck and passing trains visible.
+    for(let px=x;px<nx;px+=4.5){
+      const q=Math.min(px+4.5,nx);
+      for(const side of [-1,1]){
+        const z1=eastBridgeZ(px)+side*3.6,z2=eastBridgeZ(q)+side*3.6;
+        beam([px,y-2.65,z1],[q,y-2.65,z2],.20,paintedRed);
+        beam([px,y-.55,z1],[q,y-2.65,z2],.15,paintedRed);
+        beam([px,y-2.65,z1],[q,y-.55,z2],.12,paintedRed);
+      }
     }
+    bridgeEdgeDetails({box,beam,mat,point:px=>[px,y,eastBridgeZ(px)],start:x,end:nx,halfWidth:4.08});
   }
 
   const archY=bridgeHeight, archEnds=[-197.22,242.67,286,330,420].map(x=>[x,archDeck(x),bridgeZ(x)]);
@@ -148,7 +159,12 @@ export function buildRivers({mat,box,put,beam,panel,district,tex,TICK=[],NOINK=[
     beam([-128,archY-4,spanZ(-128)+side*archDepth*.5],[277,archY-4,spanZ(277)+side*archDepth*.5],.65,paintedRed);
     for(let x=archCenter-archWidth/2;x<archCenter+archWidth/2;x+=6){
       const next=Math.min(x+6,archCenter+archWidth/2), z=spanZ(x)+side*archDepth*.5;
-      beam([x,archAt(x),z],[next,archAt(next),spanZ(next)+side*archDepth*.5],1.32,litRed);
+      beam([x,archAt(x),z],[next,archAt(next),spanZ(next)+side*archDepth*.5],.78,litRed);
+      const nz=spanZ(next)+side*archDepth*.5;
+      beam([x,archAt(x)-2.0,z],[next,archAt(next)-2.0,nz],.50,paintedRed);
+      beam([x,archAt(x)+.38,z],[next,archAt(next)+.38,nz],.10,litRed);
+      beam([x,archAt(x)-2.0,z],[next,archAt(next),nz],.20,paintedRed);
+      beam([x,archAt(x),z],[next,archAt(next)-2.0,nz],.14,paintedRed);
       beam([x,archY-5,z],[next,archY-5,spanZ(next)+side*archDepth*.5],.24,litRed);
       if(archAt(x)>archY+.4) beam([x,archY,z],[x,archAt(x),z],.19,silver);
       beam([x,archY-4.7,z],[next,archY-.25,spanZ(next)+side*archDepth*.5],.22,paintedRed);
@@ -157,6 +173,11 @@ export function buildRivers({mat,box,put,beam,panel,district,tex,TICK=[],NOINK=[
       }
     }
   }
+  for(let x=-35;x<150;x+=12){
+    const next=x+12;
+    for(const side of [-1,1])beam([x,archAt(x)-.55,spanZ(x)+side*archDepth*.5],[next,archAt(next)-.55,spanZ(next)-side*archDepth*.5],.18,paintedRed);
+  }
+  bridgeEdgeDetails({box,beam,mat,point:x=>[x,archDeck(x),spanZ(x)],start:-128,end:277,halfWidth:5.95});
   for(const x of [-111,-48,157,235,271]){
     const z=spanZ(x);
     box(5.8,26,10,embankment,x,10,z);
@@ -251,13 +272,16 @@ export function buildRivers({mat,box,put,beam,panel,district,tex,TICK=[],NOINK=[
       if(k%3===1) box(Math.min(1.67,paneWidth*.7),.13,.31,warm,x,10.98,z,angle);
     }
   }
-  const glass=new THREE.MeshBasicMaterial({map:tex(96,128,(ctx,w,h)=>{
-    ctx.fillStyle='#14293a';ctx.fillRect(0,0,w,h);
-    for(let x=1;x<w;x+=12){
-      ctx.fillStyle=x%3===1?'#577a8c':'#1a3749';ctx.fillRect(x,0,2,h);
-      for(let y=4;y<h;y+=8){
-        if((x*7+y*3)%13<3){ctx.fillStyle='#f2bf7b';ctx.fillRect(x+3,y,6,2);}
-      }
+  const glass=new THREE.MeshBasicMaterial({map:tex(256,768,(ctx,w,h)=>{
+    ctx.fillStyle='#11202e';ctx.fillRect(0,0,w,h);
+    for(let row=0;row<48;row++)for(let col=0;col<16;col++){
+      const seed=(row*37+col*67+row*col*13)%101;
+      const x=col*16,y=row*16;
+      ctx.fillStyle=seed<22?'#c1a173':seed<38?'#405c70':'#1b3041';
+      ctx.fillRect(x+2,y+2,12,12);
+      if(seed<22){ctx.fillStyle='#6d6255';ctx.fillRect(x+3,y+10,10,3);}
+      ctx.fillStyle='#617482';ctx.fillRect(x,y,1,16);
+      ctx.fillStyle=row%8===0?'#b2b3ac':'#89949b';ctx.fillRect(x,y,16,row%8===0?3:1);
     }
   })});
   const towers=[
@@ -293,7 +317,20 @@ export function buildRivers({mat,box,put,beam,panel,district,tex,TICK=[],NOINK=[
       for(let i=0;i<slices;i+=3) beam(contour(i,side),contour(i+3,side),.16,warm);
       for(let i=2;i<slices;i+=3) beam(contour(i,side),contour(i,side+1),.065,facadeGlass);
     }
+    // Continuous curtain-wall fins follow the sail taper rather than a box.
+    for(let side=0;side<4;side++)for(let col=1;col<8;col++){
+      const u=col/8;
+      for(let level=0;level<slices;level+=2){
+        const mix=(i)=>contour(i,side).map((v,j)=>v+(contour(i,side+1)[j]-v)*u);
+        beam(mix(level),mix(level+2),.045,canopy);
+      }
+    }
+    for(let level=1;level<slices;level++)for(let side=0;side<4;side++)
+      beam(contour(level,side),contour(level,side+1),level%6===0?.11:.048,canopy);
     box(w*.78,.55,d*.91,rafRoof,x+1.9,levels.rafflesPodium+h,z+3.1,phi);
+    for(const side of [-1,1])box(w*.72,.17,.15,canopy,x+1.9,levels.rafflesPodium+h+.32,z+3.1+side*d*.43,phi);
+    box(w*.44,1.1,d*.45,rafLow,x+1.9,levels.rafflesPodium+h+.55,z+3.1,phi);
+
     district.block(x+2.9,z+2,w+3,d+2.4,levels.rafflesPodium,levels.rafflesPodium+h);
   }
   // The Crystal spans the four lower central towers. Its rounded glass
@@ -302,7 +339,7 @@ export function buildRivers({mat,box,put,beam,panel,district,tex,TICK=[],NOINK=[
   const cross=new THREE.Vector3(-axis.z,0,axis.x);
   const crystal=new THREE.Vector3(299,levels.rafflesGrade+250*UNIT+26.5*UNIT/2,122);
   const crystalL=300*UNIT-8.8, crystalW=32.5*UNIT/2, crystalH=26.5*UNIT/2;
-  const rawCrystal=mat('#326575',{emissive:'#204a59',emissiveIntensity:.45,side:THREE.DoubleSide});
+  const rawCrystal=new THREE.MeshPhongMaterial({color:'#2a5261',emissive:'#244658',emissiveIntensity:.32,transparent:true,opacity:.48,depthWrite:false,side:THREE.DoubleSide,shininess:110,specular:'#bfd6e2'});
   const skin=new THREE.CylinderGeometry(1,1,crystalL,20,1,true);
   skin.rotateZ(Math.PI/2);
   skin.scale(1,crystalH,crystalW);
@@ -318,14 +355,35 @@ export function buildRivers({mat,box,put,beam,panel,district,tex,TICK=[],NOINK=[
     crystal.y+crystalH*Math.sin(angle),
     crystal.z+axis.z*long+cross.z*crystalW*Math.cos(angle)
   ];
+  const crystalFrame=mat('#b4b8b2',{emissive:'#a1b7bc',emissiveIntensity:.45});
   for(let long=-crystalL/2;long<crystalL/2;long+=3.5){
     for(let i=0;i<12;i++){
       const a=i*Math.PI/6,b=(i+1)*Math.PI/6;
-      beam(crystalPoint(long,a),crystalPoint(long,b),.128,canopy);
-      if(long+3.5<=crystalL/2) beam(crystalPoint(long,a),crystalPoint(long+3.5,b),.075,silver);
+      beam(crystalPoint(long,a),crystalPoint(long,b),.078,crystalFrame);
+      if(long+3.5<=crystalL/2) beam(crystalPoint(long,a),crystalPoint(long+3.5,b),.043,crystalFrame);
     }
   }
   for(const side of [-1,1]) beam(crystalPoint(-crystalL/2,side*.32+.78),crystalPoint(crystalL/2,side*.32+.78),.19,warm);
+  const crystalYaw=-Math.atan2(axis.z,axis.x),floorY=crystal.y-2.7;
+  const innerFloor=new THREE.MeshBasicMaterial({color:'#6c6150'}),treeLeaf=new THREE.MeshBasicMaterial({color:'#315141'}),treeTrunk=mat('#685044');
+  box(crystalL-2,.20,crystalW*1.68,innerFloor,crystal.x,floorY,crystal.z,crystalYaw);
+  for(let long=-crystalL/2+5;long<crystalL/2-2;long+=5.8){
+    const x=crystal.x+axis.x*long,z=crystal.z+axis.z*long;
+    for(const side of [-1,1]){
+      const tx=x+cross.x*side*3.3,tz=z+cross.z*side*3.3;
+      box(1.7,.35,1.35,garden,tx,floorY+.24,tz,crystalYaw);
+      box(.12,1.35,.12,treeTrunk,tx,floorY+1.03,tz);
+      const crown=put(new THREE.Mesh(new THREE.IcosahedronGeometry(1,1),treeLeaf),tx,floorY+1.95,tz);crown.scale.set(.9,1.3,.8);
+      box(.58,.07,.58,warm,x+cross.x*side*2.0,floorY+.12,z+cross.z*side*2.0,crystalYaw);
+    }
+    const a=crystalPoint(long,.10),b=crystalPoint(long,Math.PI-.10);
+    beam(a,b,.055,warm);
+  }
+  for(const side of [-1,1]){
+    const long=side*(crystalL/2+2.0),x=crystal.x+axis.x*long,z=crystal.z+axis.z*long;
+    box(3.0,.16,5.3,facadeGlass,x,floorY-.15,z,crystalYaw);
+    for(const d of [-2.65,2.65])beam([x-axis.x*1.4+cross.x*d,floorY+.75,z-axis.z*1.4+cross.z*d],[x+axis.x*1.4+cross.x*d,floorY+.75,z+axis.z*1.4+cross.z*d],.055,canopy);
+  }
   for(const [x,z] of [[283,101],[301,99],[326,115],[259,92]]){
     box(11.8,.28,7.6,garden,x,levels.rafflesPodium+.14,z);
   }

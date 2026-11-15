@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {spindleTower,bridgeEdgeDetails,bridgeLandmarks} from './bridge-details.js';
 import { buildDistrict } from './district.js';
 import { buildFrontages } from './frontages.js';
 import { buildRivers } from './rivers.js';
@@ -79,10 +80,14 @@ export function buildChongqing({ scene, box, mat, tex, put, rnd, TICK, NOINK, GL
     for (const [a,b] of [[0,1],[1,2],[0,5],[5,4],[4,3],[3,2],[5,6],[3,8]]) {
       beam(points[a],points[b],.13,gold);
     }
+    for(const side of [-1,1]){
+      beam([x+side*w*.36,y+ridge,z],[x+side*w*.46,y+ridge+.30,z],.15,darkWood);
+      beam([x+side*w*.46,y+ridge+.30,z],[x+side*w*.50,y+ridge+.80,z],.12,gold);
+    }
     if (!tiled) return;
     const ribs = mat('#514056');
     for (const [low, middle, right, highLeft, highMiddle, highRight] of [[0,1,2,5,4,3],[6,7,8,5,4,3]]) {
-      const intervals = Math.ceil(w / 1.18);
+      const intervals = Math.ceil(w / .55);
       for (let i=1;i<intervals;i++) {
         const u=i/intervals, t=(u*2)%1;
         const [a,b,c,e] = u < .5 ? [low,middle,highLeft,highMiddle] : [middle,right,highMiddle,highRight];
@@ -120,6 +125,27 @@ export function buildChongqing({ scene, box, mat, tex, put, rnd, TICK, NOINK, GL
       for(let p=1;p<depth-.9;p+=1.6){
         box(.11,height*.56,1.04,windows[Math.floor(rnd()*3)],sideX,base+height*.56,front-p);
         box(.16,height,.16,darkWood,sideX+side*.05,base+height*.5,front-p+.6);
+      }
+    }
+    const railZ=front+.63;
+    for(const h of [.58,1.19])box(width+.12,.07,.08,darkWood,x,base+h,railZ);
+    box(width+.12,.035,.045,gold,x,base+1.23,railZ+.035);
+    for(let i=0;i<bays;i++){
+      const px=x-width/2+(i+.5)*bay;
+      for(const d of [-.34,0,.34])box(.048,.53,.055,wood,px+d*bay,base+.9,railZ);
+      for(const side of [-1,1])beam([px,base+.62,railZ],[px+side*bay*.30,base+1.14,railZ],.045,wood);
+      if(hasRoof){
+        for(const side of [-1,1]){
+          const at=px+side*bay*.43;
+          for(let k=0;k<3;k++)box(.25+k*.16,.10,.34+k*.14,wood,at,base+height-.55+k*.13,front+.25+k*.10);
+        }
+        if(i%2===0){
+          box(.035,.25,.035,darkWood,px,base+height-.33,front+.68);
+          const light=put(new THREE.Mesh(new THREE.SphereGeometry(.22,10,7),redLight),px,base+height-.68,front+.68);
+          light.scale.set(1,1.28,1);
+          for(const h of [-.29,.29])box(.19,.055,.19,gold,px,base+height-.68+h,front+.68);
+          box(.035,.22,.035,amber,px,base+height-1.08,front+.68);
+        }
       }
     }
     box(width+.2,.13,.14,gold,x,base+.39,front+.47);
@@ -186,6 +212,12 @@ export function buildChongqing({ scene, box, mat, tex, put, rnd, TICK, NOINK, GL
     const x=-25+i*3;
     box(.43,3.4,.45,darkWood,x,2.5,3.8);
     beam([x-.5,.9,4],[x+.8,4.1,-.8],.19,wood);
+  }
+
+  for(let x=-24;x<25;x+=2.4){
+    box(.14,3.0,.19,wood,x,4.25,4.75);
+    for(const side of [-1,1])beam([x,3.15,4.75],[x+side*.85,5.6,4.75],.095,darkWood);
+    box(2.1,.14,.4,wood,x,5.65,4.65);
   }
 
   panel('洪崖洞',-3,17.5,3.5,11.5,2.72,{bg:'#632739',subtitle:'重庆 · 洪崖洞民俗风貌区'});
@@ -358,23 +390,6 @@ export function buildChongqing({ scene, box, mat, tex, put, rnd, TICK, NOINK, GL
       box(.13,.12,4.24,gold,px,bridgeDeck+.5,z,bridgeAngle);
     }
   }
-  for (const pylonZ of [64,204]) {
-  const towerX=bx(pylonZ);
-  for(const side of [-1,1]){
-    beam([towerX+side*5.2,-1,pylonZ],[towerX+side*4.55,bridgeDeck-1,pylonZ],2.5,stone,3.5);
-    beam([towerX+side*4.55,bridgeDeck-1,pylonZ],[towerX+side*.86,59,pylonZ],2.1,red,2.5);
-    beam([towerX+side*4.6,bridgeDeck,pylonZ+1.32],[towerX+side*.89,59,pylonZ+1.32],.17,redLight);
-    for(const dir of [-1,1]){
-      for(let i=0;i<10;i++){
-        const z=pylonZ+dir*(8+i*7);
-        beam([towerX+side*(1.1+i*.085),58-i*.51,pylonZ],
-          [bx(z)+side*3.5,bridgeDeck+.65,z],.076,redLight);
-      }
-    }
-  }
-  box(2.9,2.2,2.75,red,towerX,59,pylonZ);
-  box(2.85,.2,2.67,amber,towerX,60.2,pylonZ);
-  }
   for(const z of [12,138,264]){
     for(const side of [-1,1])box(1.05,26,1.4,stone,bx(z)+side*3.45,13,z);
     box(8.25,.6,2.0,stone,bx(z),26.1,z);
@@ -395,6 +410,18 @@ export function buildChongqing({ scene, box, mat, tex, put, rnd, TICK, NOINK, GL
   }
   const coreObjects=scene.children.filter(o=>!before.has(o));
   calibrateCoreObjects(coreObjects);
+  // Single mapped pylon; create in survey world heights after core calibration.
+  const qianCenter=bridgeLandmarks.qiansimen.pylons[0];
+  const qianAxis=new THREE.Vector2(-.40226658,1).normalize();
+  const deckY=coreHeight(27.25),towerTop=56;
+  spindleTower({put,beam,mat,center:qianCenter,deck:deckY,top:towerTop,axis:qianAxis.toArray(),halfWidth:4.8});
+  for(const direction of [-1,1])for(let i=0;i<16;i++){
+    const z=qianCenter[1]+direction*(12+i*5.6);
+    beam([qianCenter[0],towerTop-2.3-i*.46,qianCenter[1]],[bx(z),deckY+.16,z],.075,redLight);
+    box(.21,.24,.24,wood,bx(z),deckY+.15,z);
+  }
+  bridgeEdgeDetails({box,beam,mat,point:z=>[bx(z),deckY,z],start:0,end:285,halfWidth:3.8});
+
   buildDistrict({mat,box,put,tex,beam,panel,district:worldDistrict,frontages});
   buildRivers({mat,box,put,beam,panel,district:worldDistrict,tex,TICK,NOINK,GLOW,scene});
   const afterWorld=new Set(scene.children);

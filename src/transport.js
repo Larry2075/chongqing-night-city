@@ -3,6 +3,7 @@ import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {transportNetwork as network} from '../data/transport-network.js';
 import {terrainHeight,coreGround,inside,geo} from './geography.js';
 import {coreHeight,levels,UNIT} from '../data/site-survey.js';
+import {line6Shot} from './river-flight.js';
 import {archDeck} from './river-route.js';
 
 const clamp=THREE.MathUtils.clamp;
@@ -172,9 +173,10 @@ export function buildTransport({scene,put,box,mat,beam,panel,TICK,NOINK}) {
     trainRoutes.forEach((route,r)=>{
       const speed=(route.bridgeId==='chaotianmen'?56:48)/3.6*UNIT,L=route.path.length;
       const [entry,exit]=route.visible[0];
-      // Southbound Line 6 is midway across Qiansimen during the 53–65s tracking shot.
+      // Southbound Line 6 is midway across Qiansimen during the 64–77s tracking shot.
       const initial=cinematic && route.id==='rail-327734436'?0:entry+(exit-entry)*(r%2?.58:.62);
-      const headDistance=(seconds*speed+initial+45)%(L+170)-45;
+      const trainSeconds=cinematic && route.id==='rail-327734436'?seconds-line6Shot.offset/1000:seconds;
+      const headDistance=(trainSeconds*speed+initial+45)%(L+170)-45;
       for(let j=0;j<6;j++){
         const i=r*6+j,d=headDistance-j*6.902;
         const visible=route.visible.some(([a,b])=>d>=a&&d<=b);

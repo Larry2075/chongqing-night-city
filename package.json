@@ -9,6 +9,7 @@
     "preview": "node server.mjs --dist",
     "check": "node scripts/check-navigation.mjs && node scripts/check-terrain.mjs && node scripts/check-transport.mjs",
     "check:corridor": "node scripts/check-corridor.mjs",
+    "check:landmarks": "node scripts/check-landmarks.mjs",
     "check:one-take": "node scripts/check-one-take.mjs"
   },
   "dependencies": {

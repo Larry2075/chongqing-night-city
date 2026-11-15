@@ -1,0 +1,41 @@
+{
+  "durationSeconds": 105,
+  "note": "Frustum coverage, complemented by visual occlusion checks in the browser.",
+  "views": [
+    {
+      "landmark": "朝天门大桥",
+      "framedSeconds": 10,
+      "longestContinuousSeconds": 10
+    },
+    {
+      "landmark": "东水门大桥",
+      "framedSeconds": 10.25,
+      "longestContinuousSeconds": 10.25
+    },
+    {
+      "landmark": "千厮门大桥",
+      "framedSeconds": 6.25,
+      "longestContinuousSeconds": 6.25
+    },
+    {
+      "landmark": "东水门北塔",
+      "framedSeconds": 12.25,
+      "longestContinuousSeconds": 12.25
+    },
+    {
+      "landmark": "东水门南塔",
+      "framedSeconds": 7.5,
+      "longestContinuousSeconds": 7.5
+    },
+    {
+      "landmark": "来福士水晶连廊",
+      "framedSeconds": 13,
+      "longestContinuousSeconds": 13
+    },
+    {
+      "landmark": "洪崖洞",
+      "framedSeconds": 9.75,
+      "longestContinuousSeconds": 5.25
+    }
+  ]
+}

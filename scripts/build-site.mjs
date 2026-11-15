@@ -19,7 +19,7 @@ html=html.replace(/\s*<script type="importmap">[\s\S]*?<\/script>/,'')
   .replace('./src/app.js',outputFor('src/app.js')).replace('./style.css',outputFor('style.css'));
 await writeFile(new URL('index.html',out),html);
 await writeFile(new URL('.nojekyll',out),'');
-for(const file of ['data/building-coverage.svg','data/map-audit.svg','docs/waterfront-references.md','docs/hongya-chaotian-reference.md','LICENSE.simcraft','THIRD_PARTY_NOTICES.md']){
+for(const file of ['data/building-coverage.svg','data/map-audit.svg','docs/waterfront-references.md','docs/landmark-references.md','docs/hongya-chaotian-reference.md','LICENSE.simcraft','THIRD_PARTY_NOTICES.md']){
   const target=new URL(file,out);
   await mkdir(new URL('.',target),{recursive:true});
   await cp(new URL('../'+file,import.meta.url),target);
